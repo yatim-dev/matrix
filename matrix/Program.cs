@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Text;
 
 namespace matrix
@@ -72,11 +73,21 @@ namespace matrix
             stringBuilder.Append("|");
             return stringBuilder.ToString();
         }
+
+        public static int[,] NumMul(int[,] matrix, int number)
+        {
+            for (var i = 0; i < matrix.GetLength(0); i++)
+                for (var j = 0; j < matrix.GetLength(1); j++)
+                    matrix[i, j] = matrix[i,j] * number;
+            return matrix;
+        }
+
         public static void Main()
         {
             //           var matrixParams = ReadMatrixParams();
             var matrix = CreateRandomMatrix(3,3);
             WriteMatrix(matrix);
+            WriteMatrix(NumMul(matrix,3)) ;
             Console.ReadLine();
         }
     }

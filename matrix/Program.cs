@@ -10,7 +10,7 @@ namespace matrix
         {
             var result = new int[cols];
             var stringNums = Console.ReadLine().Split(' ');
-            for (var i = 0; i < cols; i++) 
+            for (var i = 0; i < cols; i++)
                 result[i] = int.Parse(stringNums[i]);
             return result;
         }
@@ -78,16 +78,16 @@ namespace matrix
         {
             for (var i = 0; i < matrix.GetLength(0); i++)
                 for (var j = 0; j < matrix.GetLength(1); j++)
-                    matrix[i, j] = matrix[i,j] * number;
+                    matrix[i, j] *= number;
             return matrix;
         }
 
         public static void Main()
         {
             //           var matrixParams = ReadMatrixParams();
-            var matrix = CreateRandomMatrix(3,3);
+            var matrix = CreateRandomMatrix(3, 3);
             WriteMatrix(matrix);
-            WriteMatrix(NumMul(matrix,3)) ;
+            WriteMatrix(NumMul(matrix, 3));
             Console.ReadLine();
         }
     }

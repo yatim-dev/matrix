@@ -10,8 +10,10 @@ namespace matrix
         {
             var result = new int[cols];
             var stringNums = Console.ReadLine().Split(' ');
+
             for (var i = 0; i < cols; i++)
                 result[i] = int.Parse(stringNums[i]);
+            
             return result;
         }
 
@@ -25,6 +27,7 @@ namespace matrix
                 for (var j = 0; j < matrix.GetLength(1); j++)
                     matrix[i, j] = nums[j];
             }
+
             return matrix;
         }
 
@@ -34,8 +37,9 @@ namespace matrix
             var matrix = new int[rows, cols];
 
             for (var i = 0; i < matrix.GetLength(0); i++)
-                for (var j = 0; j < matrix.GetLength(1); j++)
-                    matrix[i, j] = random.Next(minArg, maxArg);
+            for (var j = 0; j < matrix.GetLength(1); j++)
+                matrix[i, j] = random.Next(minArg, maxArg);
+            
             return matrix;
         }
 
@@ -46,6 +50,7 @@ namespace matrix
             for (var i = 0; i < matrix.GetLength(0); i++)
                 for (var j = 0; j < matrix.GetLength(1); j++)
                     _ = i == j ? matrix[i, j] = 1 : matrix[i, j] = 0;
+            
             return matrix;
         }
 
@@ -58,36 +63,56 @@ namespace matrix
         private static void WriteMatrix(int[,] matrix)
         {
             for (var i = 0; i < matrix.GetLength(0); i++)
-            {
-                Console.WriteLine(BildingString(matrix, i));
-            }
+                Console.WriteLine(BuildingString(matrix, i));
         }
-        private static string BildingString(int[,] matrix, int i)
+
+        private static string BuildingString(int[,] matrix, int i)
         {
             var stringBuilder = new StringBuilder("| ");
+            
             for (var j = 0; j < matrix.GetLength(1); j++)
             {
                 stringBuilder.Append(matrix[i, j]);
                 stringBuilder.Append(" ");
             }
             stringBuilder.Append("|");
+            
             return stringBuilder.ToString();
         }
+
 
         public static int[,] NumMul(int[,] matrix, int number)
         {
             for (var i = 0; i < matrix.GetLength(0); i++)
                 for (var j = 0; j < matrix.GetLength(1); j++)
                     matrix[i, j] *= number;
+                    
             return matrix;
+        }
+        
+        public static int[,] AddMatrix(int[,] matrix, int[,] matrix1 )
+        {
+            var addMatrix = new int[matrix.GetLength(0), matrix.GetLength(1)];
+
+            if ((matrix.GetLength(0) == matrix1.GetLength(0)) && (matrix.GetLength(1) == matrix1.GetLength(1)))
+                for (var i = 0; i < addMatrix.GetLength(0); i++)
+                    for (var j = 0; j < addMatrix.GetLength(1); j++)
+                        addMatrix[i, j] = matrix[i, j] + matrix1[i, j];
+            else
+                throw new Exception("матрица разных размеров");
+
+            return addMatrix;
         }
 
         public static void Main()
         {
-            //           var matrixParams = ReadMatrixParams();
-            var matrix = CreateRandomMatrix(3, 3);
+            var matrix = CreateRandomMatrix(3,3);
+            var matrix1 = CreateRandomMatrix(3, 3);   
             WriteMatrix(matrix);
-            WriteMatrix(NumMul(matrix, 3));
+            Console.WriteLine();
+            WriteMatrix(matrix1);
+            Console.WriteLine();
+            WriteMatrix(AddMatrix(matrix, matrix1));
             Console.ReadLine();
         }
     }

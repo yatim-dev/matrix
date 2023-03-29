@@ -10,7 +10,7 @@ namespace matrix
         {
             var result = new int[cols];
             var stringNums = Console.ReadLine().Split(' ');
-            
+
             for (var i = 0; i < cols; i++)
                 result[i] = int.Parse(stringNums[i]);
             
@@ -80,6 +80,16 @@ namespace matrix
             return stringBuilder.ToString();
         }
 
+
+        public static int[,] NumMul(int[,] matrix, int number)
+        {
+            for (var i = 0; i < matrix.GetLength(0); i++)
+                for (var j = 0; j < matrix.GetLength(1); j++)
+                    matrix[i, j] *= number;
+                    
+            return matrix;
+        }
+        
         public static int[,] AddMatrix(int[,] matrix, int[,] matrix1 )
         {
             var addMatrix = new int[matrix.GetLength(0), matrix.GetLength(1)];
@@ -96,7 +106,6 @@ namespace matrix
 
         public static void Main()
         {
-            //           var matrixParams = ReadMatrixParams();
             var matrix = CreateRandomMatrix(3,3);
             var matrix1 = CreateRandomMatrix(3, 3);   
             WriteMatrix(matrix);

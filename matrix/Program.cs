@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Text;
 
 namespace matrix
@@ -79,10 +80,30 @@ namespace matrix
             return stringBuilder.ToString();
         }
 
+        public static int[,] AddMatrix(int[,] matrix, int[,] matrix1 )
+        {
+            var addMatrix = new int[matrix.GetLength(0), matrix.GetLength(1)];
+
+            if ((matrix.GetLength(0) == matrix1.GetLength(0)) && (matrix.GetLength(1) == matrix1.GetLength(1)))
+                for (var i = 0; i < addMatrix.GetLength(0); i++)
+                    for (var j = 0; j < addMatrix.GetLength(1); j++)
+                        addMatrix[i, j] = matrix[i, j] + matrix1[i, j];
+            else
+                throw new Exception("матрица разных размеров");
+
+            return addMatrix;
+        }
+
         public static void Main()
         {
-            var matrix = CreateRandomMatrix(3, 3);
+            //           var matrixParams = ReadMatrixParams();
+            var matrix = CreateRandomMatrix(3,3);
+            var matrix1 = CreateRandomMatrix(3, 3);   
             WriteMatrix(matrix);
+            Console.WriteLine();
+            WriteMatrix(matrix1);
+            Console.WriteLine();
+            WriteMatrix(AddMatrix(matrix, matrix1));
             Console.ReadLine();
         }
     }

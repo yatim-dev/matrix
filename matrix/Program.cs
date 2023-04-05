@@ -103,14 +103,27 @@ namespace matrix
 
             return addMatrix;
         }
+        public static int[,]  SubtractMatrix(int[,] matrix1, int[,] matrix2)
+        {
+            var Subtractmatrix = new int[matrix1.GetLength(0), matrix1.GetLength(1)];
+
+            if ((matrix1.GetLength(0) == matrix2.GetLength(0)) && (matrix1.GetLength(1) == matrix2.GetLength(1)))
+                for (var i = 0; i < Subtractmatrix.GetLength(0); i++)
+                    for (var j = 0; j < Subtractmatrix.GetLength(1); j++)
+                        Subtractmatrix[i, j] = matrix1[i, j] - matrix2[i, j];
+            else
+                throw new Exception("матрица разных размеров");
+
+            return Subtractmatrix;
+        }
         public static int[,] SubMatrix(int[,] matrix1, int[,] matrix2)
         {
             var subMatrix = new int[matrix1.GetLength(0), matrix2.GetLength(1)];
+
             if (matrix1.GetLength(0) != matrix2.GetLength(1))
             {
                 throw new Exception("can not mult");
             }
-
             else
             {
                 for (var i = 0; i < matrix1.GetLength(1); i++)
@@ -122,13 +135,20 @@ namespace matrix
 
             return subMatrix;
         }
+        public static int[,] TransposedMatrix(int[,] matrix)
+        {
+            var transposedMatrix = new int[matrix.GetLength(1), matrix.GetLength(0)];
+            for (var i = 0; i < matrix.GetLength(0); i++)
+                for (var j = 0; j < matrix.GetLength(1); j++)  
+                    transposedMatrix[j, i] = matrix[i,j];
+            return transposedMatrix;
+        }
 
         public static void Main()
         {
 
-            var matrix1 = CreateMatrix(2,2);
-            var matrix2 = CreateMatrix(2, 2);
-            var matrix3 = SubMatrix(matrix1, matrix2);
+            var matrix1 = CreateMatrix(2,3);
+            var matrix3 = TransposedMatrix(matrix1);
             WriteMatrix(matrix3);
         }
     }

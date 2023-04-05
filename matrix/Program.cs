@@ -1,6 +1,4 @@
-﻿using System;
-using System.Numerics;
-using System.Text;
+﻿using System.Text;
 
 namespace matrix
 {
@@ -13,7 +11,7 @@ namespace matrix
 
             for (var i = 0; i < cols; i++)
                 result[i] = int.Parse(stringNums[i]);
-            
+
             return result;
         }
 
@@ -37,11 +35,12 @@ namespace matrix
             var matrix = new int[rows, cols];
 
             for (var i = 0; i < matrix.GetLength(0); i++)
-            for (var j = 0; j < matrix.GetLength(1); j++)
-                matrix[i, j] = random.Next(minArg, maxArg);
-            
+                for (var j = 0; j < matrix.GetLength(1); j++)
+                    matrix[i, j] = random.Next(minArg, maxArg);
+
             return matrix;
         }
+
 
         public static int[,] CreateUnitMatrix(int rows)
         {
@@ -50,7 +49,7 @@ namespace matrix
             for (var i = 0; i < matrix.GetLength(0); i++)
                 for (var j = 0; j < matrix.GetLength(1); j++)
                     _ = i == j ? matrix[i, j] = 1 : matrix[i, j] = 0;
-            
+
             return matrix;
         }
 
@@ -69,14 +68,14 @@ namespace matrix
         private static string BuildingString(int[,] matrix, int i)
         {
             var stringBuilder = new StringBuilder("| ");
-            
+
             for (var j = 0; j < matrix.GetLength(1); j++)
             {
                 stringBuilder.Append(matrix[i, j]);
                 stringBuilder.Append(" ");
             }
             stringBuilder.Append("|");
-            
+
             return stringBuilder.ToString();
         }
 
@@ -86,11 +85,12 @@ namespace matrix
             for (var i = 0; i < matrix.GetLength(0); i++)
                 for (var j = 0; j < matrix.GetLength(1); j++)
                     matrix[i, j] *= number;
-                    
+
             return matrix;
         }
-        
-        public static int[,] AddMatrix(int[,] matrix, int[,] matrix1 )
+
+
+        public static int[,] AddMatrix(int[,] matrix, int[,] matrix1)
         {
             var addMatrix = new int[matrix.GetLength(0), matrix.GetLength(1)];
 
@@ -103,17 +103,33 @@ namespace matrix
 
             return addMatrix;
         }
+        public static int[,] SubMatrix(int[,] matrix1, int[,] matrix2)
+        {
+            var subMatrix = new int[matrix1.GetLength(0), matrix2.GetLength(1)];
+            if (matrix1.GetLength(0) != matrix2.GetLength(1))
+            {
+                throw new Exception("can not mult");
+            }
+
+            else
+            {
+                for (var i = 0; i < matrix1.GetLength(1); i++)
+                    for (var j = 0; j < matrix2.GetLength(0); j++)
+                        for (var x = 0; x < matrix1.GetLength(1); x++)
+                            subMatrix[i,j] += matrix1[i, x] * matrix2[x, j];
+
+            }
+
+            return subMatrix;
+        }
 
         public static void Main()
         {
-            var matrix = CreateRandomMatrix(3,3);
-            var matrix1 = CreateRandomMatrix(3, 3);   
-            WriteMatrix(matrix);
-            Console.WriteLine();
-            WriteMatrix(matrix1);
-            Console.WriteLine();
-            WriteMatrix(AddMatrix(matrix, matrix1));
-            Console.ReadLine();
+
+            var matrix1 = CreateMatrix(2,2);
+            var matrix2 = CreateMatrix(2, 2);
+            var matrix3 = SubMatrix(matrix1, matrix2);
+            WriteMatrix(matrix3);
         }
     }
 }

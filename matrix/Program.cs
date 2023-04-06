@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 namespace matrix
 {
@@ -29,14 +30,15 @@ namespace matrix
             return matrix;
         }
 
-        public static int[,] CreateRandomMatrix(int rows, int cols, int minArg = 0, int maxArg = 100)
+        public static int[,] CreateRandomMatrix(int rows, int cols,
+            int minArg = 0, int maxArg = 100)
         {
             var random = new Random();
             var matrix = new int[rows, cols];
 
             for (var i = 0; i < matrix.GetLength(0); i++)
-                for (var j = 0; j < matrix.GetLength(1); j++)
-                    matrix[i, j] = random.Next(minArg, maxArg);
+            for (var j = 0; j < matrix.GetLength(1); j++)
+                matrix[i, j] = random.Next(minArg, maxArg);
 
             return matrix;
         }
@@ -47,8 +49,8 @@ namespace matrix
             var matrix = new int[rows, rows];
 
             for (var i = 0; i < matrix.GetLength(0); i++)
-                for (var j = 0; j < matrix.GetLength(1); j++)
-                    _ = i == j ? matrix[i, j] = 1 : matrix[i, j] = 0;
+            for (var j = 0; j < matrix.GetLength(1); j++)
+                _ = i == j ? matrix[i, j] = 1 : matrix[i, j] = 0;
 
             return matrix;
         }
@@ -74,17 +76,18 @@ namespace matrix
                 stringBuilder.Append(matrix[i, j]);
                 stringBuilder.Append(" ");
             }
+
             stringBuilder.Append("|");
 
             return stringBuilder.ToString();
         }
 
 
-        public static int[,] NumMul(int[,] matrix, int number)
+        public static int[,] ScalarMultMatrix(int[,] matrix, int number)
         {
             for (var i = 0; i < matrix.GetLength(0); i++)
-                for (var j = 0; j < matrix.GetLength(1); j++)
-                    matrix[i, j] *= number;
+            for (var j = 0; j < matrix.GetLength(1); j++)
+                matrix[i, j] *= number;
 
             return matrix;
         }
@@ -96,39 +99,56 @@ namespace matrix
 
             if ((matrix.GetLength(0) == matrix1.GetLength(0)) && (matrix.GetLength(1) == matrix1.GetLength(1)))
                 for (var i = 0; i < addMatrix.GetLength(0); i++)
-                    for (var j = 0; j < addMatrix.GetLength(1); j++)
-                        addMatrix[i, j] = matrix[i, j] + matrix1[i, j];
+                for (var j = 0; j < addMatrix.GetLength(1); j++)
+                    addMatrix[i, j] = matrix[i, j] + matrix1[i, j];
             else
                 throw new Exception("матрица разных размеров");
 
             return addMatrix;
         }
+
         public static int[,] SubMatrix(int[,] matrix1, int[,] matrix2)
         {
-            var subMatrix = new int[matrix1.GetLength(0), matrix2.GetLength(1)];
-            if (matrix1.GetLength(0) != matrix2.GetLength(1))
-            {
-                throw new Exception("can not mult");
-            }
+            var Subtractmatrix = new int[matrix1.GetLength(0), matrix1.GetLength(1)];
 
+            if ((matrix1.GetLength(0) == matrix2.GetLength(0)) && (matrix1.GetLength(1) == matrix2.GetLength(1)))
+                for (var i = 0; i < Subtractmatrix.GetLength(0); i++)
+                for (var j = 0; j < Subtractmatrix.GetLength(1); j++)
+                    Subtractmatrix[i, j] = matrix1[i, j] - matrix2[i, j];
             else
-            {
-                for (var i = 0; i < matrix1.GetLength(1); i++)
-                    for (var j = 0; j < matrix2.GetLength(0); j++)
-                        for (var x = 0; x < matrix1.GetLength(1); x++)
-                            subMatrix[i,j] += matrix1[i, x] * matrix2[x, j];
+                throw new Exception("матрица разных размеров");
 
-            }
+            return Subtractmatrix;
+        }
+
+        public static int[,] MultMatrix(int[,] matrix1, int[,] matrix2)
+        {
+            var subMatrix = new int[matrix1.GetLength(0), matrix2.GetLength(1)];
+
+            if (matrix1.GetLength(0) != matrix2.GetLength(1))
+                throw new Exception("can not mult");
+
+            for (var i = 0; i < matrix1.GetLength(1); i++)
+            for (var j = 0; j < matrix2.GetLength(0); j++)
+            for (var x = 0; x < matrix1.GetLength(1); x++)
+                subMatrix[i, j] += matrix1[i, x] * matrix2[x, j];
 
             return subMatrix;
         }
 
+        public static int[,] TransposedMatrix(int[,] matrix)
+        {
+            var transposedMatrix = new int[matrix.GetLength(1), matrix.GetLength(0)];
+            for (var i = 0; i < matrix.GetLength(0); i++)
+            for (var j = 0; j < matrix.GetLength(1); j++)
+                transposedMatrix[j, i] = matrix[i, j];
+            return transposedMatrix;
+        }
+
         public static void Main()
         {
-
-            var matrix1 = CreateMatrix(2,2);
-            var matrix2 = CreateMatrix(2, 2);
-            var matrix3 = SubMatrix(matrix1, matrix2);
+            var matrix1 = CreateMatrix(2, 3);
+            var matrix3 = TransposedMatrix(matrix1);
             WriteMatrix(matrix3);
         }
     }
